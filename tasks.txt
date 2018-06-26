@@ -4,3 +4,12 @@ get only 7 messages - then another 7
 hash the messages
 emoji
 tests
+
+
+
+alone	          mainTab		
+SignIn	        chats	Conversation.js	ContactInfo.js
+SignUp	        friends		
+	              settings		
+	              UserInfo.js		
+	              status		

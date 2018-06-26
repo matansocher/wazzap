@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 import store from './src/store';
 
 import InfoScreen from './src/screens/InfoScreen';
 import ChatsScreen from './src/screens/ChatsScreen';
+import ConversationScreen from './src/screens/ConversationScreen';
+import ContactInfoScreen from './src/screens/ContactInfoScreen';
 import FriendsScreen from './src/screens/FriendsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import StatusScreen from './src/screens/StatusScreen';
@@ -21,46 +23,22 @@ export default class App extends React.Component {
   // }
 
   render() {
-
-    // const MainNavigator = TabNavigator({
-    //   welcome: { screen: WelcomeScreen },
-    //   auth: { screen: AuthScreen },
-    //   main: {
-    //     screen: TabNavigator({
-    //       map: { screen: MapScreen },
-    //       deck: { screen: DeckScreen },
-    //       review: {
-    //         screen: StackNavigator({
-    //           review: { screen: ReviewScreen },
-    //           settings: { screen: SettingsScreen }
-    //         })
-    //       }
-    //     }, {
-    //       tabBarPosition: 'bottom',
-    //       tabBarOptions: {
-    //         labelStyle: { fontSize: 12 }
-    //       }
-    //     })
-    //   }
-    // }, {
-    //   navigationOptions: {
-    //     tabBar: { visible: false }
-    //   },
-    //   lazyLoad: true
-    // });
-
     const MainNavigator = createBottomTabNavigator({
-      SignIn: SignInScreen,
-      SignUp: SignUpScreen,
       main: {
         screen: createBottomTabNavigator({
           Status: StatusScreen,
           Info: InfoScreen,
           Friends: FriendsScreen,
-          Chats: ChatsScreen,
+          Chats: createStackNavigator({
+            Chats: { screen: ChatsScreen },
+            Conversation: { screen: ConversationScreen },
+            ContactInfo: { screen: ContactInfoScreen }
+          }),
           Settings: SettingsScreen,
         })
-      }
+      },
+      SignIn: SignInScreen,
+      SignUp: SignUpScreen,
     }, {
       navigationOptions: {
         tabBarVisible: false
