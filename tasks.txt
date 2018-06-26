@@ -1,0 +1,6 @@
+send message - enter skips line, and then sends
+shift + enter should not send message
+get only 7 messages - then another 7
+hash the messages
+emoji
+tests
