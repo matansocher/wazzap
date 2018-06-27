@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index';
 
 class InfoScreen extends Component {
   static navigationOptions = {
@@ -35,9 +36,11 @@ const styles = StyleSheet.create({
   },
 });
 
-// function mapStateToProps(state) {
-//   return { likedJobs: state.likedJobs };
-// }
+function mapStateToProps(state) {
+  return { 
+    user: state.user,
+    avatars: state.avatars
+  };
+}
 
-// export default connect(mapStateToProps)(InfoScreen);
-export default InfoScreen;
+export default connect(mapStateToProps, actions)(InfoScreen);

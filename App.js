@@ -11,7 +11,6 @@ import ConversationScreen from './src/screens/ConversationScreen';
 import ContactInfoScreen from './src/screens/ContactInfoScreen';
 import FriendsScreen from './src/screens/FriendsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import StatusScreen from './src/screens/StatusScreen';
 
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -23,10 +22,38 @@ export default class App extends React.Component {
   // }
 
   render() {
+
+    const MainNavigator = TabNavigator({
+      welcome: { screen: WelcomeScreen },
+      auth: { screen: AuthScreen },
+      main: {
+        screen: TabNavigator({
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
+          review: {
+            screen: StackNavigator({
+              review: { screen: ReviewScreen },
+              settings: { screen: SettingsScreen }
+            })
+          }
+        }, {
+          tabBarPosition: 'bottom',
+          tabBarOptions: {
+            labelStyle: { fontSize: 12 }
+          }
+        })
+      }
+    }, {
+      navigationOptions: {
+        tabBar: { visible: false }
+      },
+      lazyLoad: true
+    });
+
+
     const MainNavigator = createBottomTabNavigator({
       main: {
         screen: createBottomTabNavigator({
-          Status: StatusScreen,
           Info: InfoScreen,
           Friends: FriendsScreen,
           Chats: createStackNavigator({
@@ -41,7 +68,7 @@ export default class App extends React.Component {
       SignUp: SignUpScreen,
     }, {
       navigationOptions: {
-        tabBarVisible: false
+        // tabBarVisible: false
       },
       lazyLoad: true
     });

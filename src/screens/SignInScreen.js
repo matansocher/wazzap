@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
+import { Button, Icon } from 'react-native-elements';
+import fire from '../firebase';
 import * as actions from '../actions/index';
 
 class SignInScreen extends Component {
@@ -12,6 +12,41 @@ class SignInScreen extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      loading: false
+    }
+  }
+
+  singInClick = () => {
+    // this.setState({ loading: true }, () => {
+    //   let signInMessage = '';
+    //   const { email, password } = this.state;
+    //   fire.auth().signInWithEmailAndPassword(email, password).then(user => {
+    //     this.props.actionLoginUser(user.uid, () => {
+    //       this.props.navigation.navigate('Chats');
+    //     });
+    //   }).catch(e => {
+    //     signInMessage = e.message;
+    //     this.setState({ loading: false, signInMessage });
+    //   });
+    // });
+  }
+
+  signUpClick = () => {
+    this.props.navigation.navigate('SignUp');
+  }
+
+  // handleChange = (text) => {
+  //   var change = {};
+  //   change[e.target.name] = e.target.value;
+  //   this.setState(change, () => {
+  //   });
+  // }
+
   render() {
     return (
       <View style={styles.container}>
@@ -21,6 +56,30 @@ class SignInScreen extends Component {
         <Text>SignInScreen</Text>
         <Text>SignInScreen</Text>
         <Text>SignInScreen</Text>
+
+        <TextInput
+          style={{height: 40}}
+          placeholder="Email"
+          onChangeText={(text) => this.setState({ email: text })}
+        />
+
+        <TextInput
+          style={{height: 40}}
+          placeholder="Email"
+          onChangeText={(text) => this.setState({ email: text })}
+        />
+
+        <Button
+          onPress={this.singInClick}
+          title="Sign In"
+          color="#841584"
+        />
+
+        <Button
+          title='Sign Up For Wazzap'
+          onPress={this.signUpClick}
+        />
+
       </View>
     );
   }
@@ -36,11 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    contactList: state.contactList,
-    user: state.user
-  };
-}
-
-export default connect(mapStateToProps, actions)(SignInScreen);
+export default connect(null, actions)(SignInScreen);

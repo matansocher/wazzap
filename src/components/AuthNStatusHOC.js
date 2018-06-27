@@ -13,7 +13,7 @@ export default function (ComposedComponent) {
 
     componentWillMount() {
       if (_.isEmpty(this.props.user)) {
-        this.context.router.history.push('/')
+        this.context.navigation.navigate('Chats')
       }
       window.addEventListener("beforeunload", this.onUnload);
 
@@ -21,7 +21,7 @@ export default function (ComposedComponent) {
 
     componentWillUpdate(nextProps) {
       if (_.isEmpty(nextProps.user)) {
-        this.context.router.history.push('/')
+        this.context.navigation.navigate('Chats')
       }
     }
 

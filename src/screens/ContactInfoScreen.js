@@ -12,6 +12,12 @@ class ContactInfoScreen extends Component {
     }
   }
 
+  componentWillMount() {
+    if (_.isEmpty(this.props.currentChatUser)) {
+      this.props.navigation.navigate('Chats');
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -38,8 +44,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    contactList: state.contactList,
-    user: state.user
+    currentChatUser: state.currentChatUser
   };
 }
 

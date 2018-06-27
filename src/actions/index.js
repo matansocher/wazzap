@@ -61,7 +61,7 @@ export function actionSignUpUser(email, name, avatar, uid, callback) {
   };
 }
 
-export function actionLoginUser(uid) {
+export function actionLoginUser(uid, callback) {
   return dispatch => {
     fire.database().ref(`users/${uid}`).once('value', snap => {
       const user = snap.val();
@@ -69,6 +69,7 @@ export function actionLoginUser(uid) {
         type: LOGIN_USER,
         payload: user
       });
+      callback();
     });
   }
 }

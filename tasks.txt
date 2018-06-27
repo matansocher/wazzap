@@ -1,6 +1,7 @@
 send message - enter skips line, and then sends
 shift + enter should not send message
 get only 7 messages - then another 7
+make handle change generic
 hash the messages
 emoji
 tests
@@ -11,5 +12,4 @@ alone	          mainTab
 SignIn	        chats	Conversation.js	ContactInfo.js
 SignUp	        friends		
 	              settings		
-	              UserInfo.js		
-	              status		
+	              UserInfo	

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Icon } from 'react-native-elements';
+import fire from '../firebase';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import { Icon } from 'react-native-elements';
 
 class ConversationScreen extends Component {
   static navigationOptions = {
@@ -38,7 +39,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    contactList: state.contactList,
+    currentChatUser: state.currentChatUser,
+    currentChatMessages: state.currentChatMessages,
     user: state.user
   };
 }

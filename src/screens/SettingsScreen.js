@@ -14,12 +14,9 @@ class SettingsScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>SettingsScreens</Text>
-        <Text>SettingsScreens</Text>
-        <Text>SettingsScreens</Text>
-        <Text>SettingsScreens</Text>
-        <Text>SettingsScreens</Text>
-        <Text>SettingsScreens</Text>
+        <Text>Dark Mode</Text>
+        <Text>Starred Messages</Text>
+        <Text>notifications</Text>
       </View>
     );
   }
