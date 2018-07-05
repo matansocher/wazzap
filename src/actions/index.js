@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import fire from '../firebase';
 import {
+  CHANGE_THEME,
   FETCH_AVATARS,
   SIGNUP_USER,
   LOGIN_USER,
@@ -17,9 +18,17 @@ import {
   SEARCH_FRIENDS, // when trying to fetch new friends
   ADD_AS_FRIEND // when adding a friend
 } from '../actions/types';
+import { lightTheme, darkTheme } from '../CONSTANTS';
 
 import { getAvatarsNames } from './CommonFunctions';
 
+export function actionChangeTheme(theme) {
+  const newTheme = theme === 'dark' ? darkTheme : lightTheme;
+  return {
+    type: CHANGE_THEME,
+    payload: newTheme
+  }
+}
 
 export function actionFetchAvatars(callback) {
   // return dispatch => {
@@ -42,6 +51,7 @@ export function actionFetchAvatars(callback) {
 }
 
 export function actionSignUpUser(email, name, avatar, uid, callback) {
+  console.log("inside action")
   return dispatch => {
     // fire.storage().ref(`/avatars/${avatar}`).getDownloadURL().then(url => {
     fire.database().ref(`users/${uid}`).set({

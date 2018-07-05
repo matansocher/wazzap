@@ -1,23 +1,46 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Icon } from 'react-native-elements';
-// import { connect } from 'react-redux';
+import { StyleSheet, View, Text, Switch } from 'react-native';
+import { Icon, ListItem, Avatar } from 'react-native-elements';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index';
 
 class SettingsScreen extends Component {
   static navigationOptions = {
     title: 'Settings',
     tabBarIcon: ({ tintColor }) => {
-      return <Icon name="favorite" size={30} color={tintColor} />;
+      return <Icon name="settings" size={30} color={tintColor} />;
     }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      darkModeSwitch: false,
+      notificationsSwitch: false
+    }
+  }
+
+  darkModeSwitchChange = (value) => {
+    this.setState({ darkModeSwitch: value })
+  }
+
+  notificationsSwitchChange = (value) => {
+    this.setState({ notificationsSwitch: value })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Dark Mode</Text>
-        <Text>Starred Messages</Text>
+        <Switch
+          onValueChange={(value) => darkModeSwitchChange(value)}
+          value={this.state.darkModeSwitch} />
         <Text>notifications</Text>
-      </View>
+        <Switch
+          onValueChange={(value) => notificationsSwitchChange(value)}
+          value={this.state.notificationsSwitch}
+        />
+      </View >
     );
   }
 }
@@ -26,7 +49,7 @@ class SettingsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#373d47',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -36,5 +59,5 @@ const styles = StyleSheet.create({
 //   return { likedJobs: state.likedJobs };
 // }
 
-// export default connect(mapStateToProps)(SettingsScreen);
+export default connect(null, actions)(SettingsScreen);
 export default SettingsScreen;

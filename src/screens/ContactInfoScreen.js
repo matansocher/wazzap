@@ -5,12 +5,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 
 class ContactInfoScreen extends Component {
-  static navigationOptions = {
-    title: 'Chats',
-    tabBarIcon: ({ tintColor }) => {
-      return <Icon name="favorite" size={30} color={tintColor} />;
-    }
-  }
 
   componentWillMount() {
     if (_.isEmpty(this.props.currentChatUser)) {
@@ -36,7 +30,7 @@ class ContactInfoScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#373d47',
     alignItems: 'center',
     justifyContent: 'center',
   },

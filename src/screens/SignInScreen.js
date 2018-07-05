@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { StyleSheet, View, Text, TextInput, Image, Button, TouchableOpacity, Dimensions } from 'react-native';
+import { Icon } from 'react-native-elements';
+// import { Ionicons } from '@expo/vector-icons';
 import fire from '../firebase';
+import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import { getCircularProgress } from '../actions/CommonFunctions';
+
+const width = Dimensions.get('window').width;
 
 class SignInScreen extends Component {
-  static navigationOptions = {
-    title: 'Chats',
-    tabBarIcon: ({ tintColor }) => {
-      return <Icon name="favorite" size={30} color={tintColor} />;
-    }
-  }
 
   constructor(props) {
     super(props);
@@ -22,18 +21,18 @@ class SignInScreen extends Component {
   }
 
   singInClick = () => {
-    // this.setState({ loading: true }, () => {
-    //   let signInMessage = '';
-    //   const { email, password } = this.state;
-    //   fire.auth().signInWithEmailAndPassword(email, password).then(user => {
-    //     this.props.actionLoginUser(user.uid, () => {
-    //       this.props.navigation.navigate('Chats');
-    //     });
-    //   }).catch(e => {
-    //     signInMessage = e.message;
-    //     this.setState({ loading: false, signInMessage });
-    //   });
-    // });
+    this.setState({ loading: true }, () => {
+      let signInMessage = '';
+      const { email, password } = this.state;
+      fire.auth().signInWithEmailAndPassword(email, password).then(user => {
+        this.props.actionLoginUser(user.uid, () => {
+          this.props.navigation.navigate('Chats');
+        });
+      }).catch(e => {
+        signInMessage = e.message;
+        this.setState({ loading: false, signInMessage });
+      });
+    });
   }
 
   signUpClick = () => {
@@ -50,36 +49,45 @@ class SignInScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>SignInScreen</Text>
-        <Text>SignInScreen</Text>
-        <Text>SignInScreen</Text>
-        <Text>SignInScreen</Text>
-        <Text>SignInScreen</Text>
-        <Text>SignInScreen</Text>
+        <Image
+          style={{ width: 100, height: 100 }}
+          source={require('../assets/logo.png')}
+        />
+
+        {this.state.loading ? getCircularProgress() : <View />}
 
         <TextInput
-          style={{height: 40}}
+          style={styles.textInput}
           placeholder="Email"
-          onChangeText={(text) => this.setState({ email: text })}
+          onChangeText={(email) => this.setState({ email })}
         />
 
         <TextInput
-          style={{height: 40}}
-          placeholder="Email"
-          onChangeText={(text) => this.setState({ email: text })}
+          style={styles.textInput}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(password) => this.setState({ password })}
         />
 
-        <Button
+        {this.state.signInMessage ?
+          <Text style={{ color: 'red', fontWeight: 'bold' }}>
+            {this.state.signInMessage}
+          </Text>
+          : <View />}
+
+        <TouchableOpacity
           onPress={this.singInClick}
-          title="Sign In"
-          color="#841584"
-        />
+          style={styles.signInButton}
+        >
+          <Icon name="pregnant-woman" size={30} color='#000000' />
+
+          <Text style={{ fontSize: 24 }} > Sign In </Text>
+        </TouchableOpacity>
 
         <Button
           title='Sign Up For Wazzap'
           onPress={this.signUpClick}
         />
-
       </View>
     );
   }
@@ -89,10 +97,28 @@ class SignInScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    paddingTop: 50,
+    backgroundColor: '#373d47',
+    alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  signInButton: {
+    // flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    width: 140,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    backgroundColor: '#00A865'
   },
+  textInput: {
+    height: 40,
+    width: width * 0.5,
+    fontSize: 24
+  }
 });
 
 export default connect(null, actions)(SignInScreen);

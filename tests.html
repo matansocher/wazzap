@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
   <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
@@ -18,13 +20,40 @@
       storageBucket: "whats-app-c5bba.appspot.com",
       messagingSenderId: "638752731394"
     };
-		const fire = firebase.initializeApp(config);
-		
-		fire.database().ref(`test/a`).update({
-			name: 33333
-		}).then(a => {
-			console.log(a);
-		})
+    const fire = firebase.initializeApp(config);
+
+    // fire.database().ref(`test/a`).update({
+    // 	name: 33333
+    // }).then(a => {
+    // 	console.log(a);
+    // })
+
+    function toDecimal(num) {
+      let counter = 0;
+      let answer = 0;
+      while (num > 0) {
+        if (num % 10 === 1) {
+          answer += Math.pow(2, counter);
+        }
+        counter++;
+        num = Math.floor(num / 10);
+      }
+      return answer;
+    }
+
+    function toBinary(num) {
+      let counter = 0;
+      let answer = 0;
+      while (num > 0) {
+        const numToAdd = num % 2 === 0 ? 0 : 1;
+        answer = numToAdd * Math.pow(10, counter) + answer;
+        counter++;
+        num = Math.floor(num / 2);
+      }
+      return answer;
+    }
+
   </script>
 </body>
+
 </html>

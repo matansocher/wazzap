@@ -1,6 +1,7 @@
 import React from 'react';
 import fire from '../firebase';
 import _ from 'lodash';
+import { View, ActivityIndicator } from 'react-native';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import CircularProgress from 'material-ui/CircularProgress';
 // import Badge from 'material-ui/Badge';
@@ -15,7 +16,7 @@ export function raedMessage(useruid, contactid) {
 // export function getUnraedBadge(isUnread) {
 //   // possible - 0(marked as unraed), some number, "None" - all raed
 //   if (isUnread === "None") {
-//     return <span />;
+//     return;
 //   }
 //   return (
 //     <span className="pull-right unraed-badge">
@@ -125,15 +126,13 @@ export function getCorrectHour(time) {
   return `${hour}:${minute}`
 }
 
-// export function getCircularProgress() {
-//   return (
-//     <MuiThemeProvider>
-//       <div className="center">
-//         <CircularProgress size={80} thickness={5} />
-//       </div>
-//     </MuiThemeProvider>
-//   );
-// }
+export function getCircularProgress() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <ActivityIndicator size="small" color="#00ff00" />
+    </View>
+  );
+}
 
 // export function getChatBubbleDate(nextMessage) {
 //   let lastTime = getLastMessageTime(nextMessage);
@@ -276,6 +275,42 @@ export function getLastMessage(isTyping, { content }, name) {
 }
 
 export function getAvatarsNames() {
+  const numberOfAvatars = 7;
+  const arrayOfAvatarsNames = [];
+  arrayOfAvatarsNames.push('default.png');
+  for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
+    arrayOfAvatarsNames.push(`contact${i}.png`);
+  }
+  return arrayOfAvatarsNames;
+}
+
+export function getAvatar(name) {
+  switch (name) {
+    case 'contact1.png':
+      return require("../assets/avatars/contact1.png");
+      break;
+    case 'contact2.png':
+      return require("../assets/avatars/contact2.png");
+      break;
+    case 'contact3.png':
+      return require("../assets/avatars/contact3.png");
+      break;
+    case 'contact4.png':
+      return require("../assets/avatars/contact4.png");
+      break;
+    case 'contact5.png':
+      return require("../assets/avatars/contact5.png");
+      break;
+    case 'contact6.png':
+      return require("../assets/avatars/contact6.png");
+      break;
+    case 'contact7.png':
+      return require("../assets/avatars/contact7.png");
+      break;
+    default:
+      return require("../assets/avatars/default.png");
+      break;
+  }
   const numberOfAvatars = 7;
   const arrayOfAvatarsNames = [];
   arrayOfAvatarsNames.push('default.png');

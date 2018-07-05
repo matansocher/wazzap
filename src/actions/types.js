@@ -1,3 +1,4 @@
+export const CHANGE_THEME = 'change_theme';
 export const FETCH_AVATARS = 'fetch_avatars';
 export const SIGNUP_USER = 'signup_user';
 export const LOGIN_USER = 'login_user';
