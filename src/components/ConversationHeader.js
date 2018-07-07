@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import _ from 'lodash';
-import { getLastSeenString } from '../actions/CommonFunctions';
+import { getLastSeenString, getAvatar } from '../actions/CommonFunctions';
 import { View, Text } from 'react-native';
+import { Card, CardItem, Left, Thumbnail, Body } from 'native-base';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import { ListItem } from 'material-ui/List';
 // import Avatar from 'material-ui/Avatar';
@@ -40,13 +41,29 @@ class ConversationHeader extends Component {
     const { name, avatar, lastSeen, isTyping } = this.props.currentChatUser.info;
     return (
       <View>
-        <Text>
-          Conversation Header
-        </Text>
+        <Card onPress={this.infoClicked}>
+          <CardItem>
+            <Left>
+              <Thumbnail source={getAvatar(avatar)} />
+              <Body>
+                <Text>{name}</Text>
+                <Text>{getLastSeenString(isTyping, lastSeen)}</Text>
+              </Body>
+            </Left>
+          </CardItem>
+        </Card>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  conversationFooter: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10
+  }
+});
 
 function mapStateToProps(state) {
   return {

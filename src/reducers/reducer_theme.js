@@ -2,7 +2,7 @@
 import { CHANGE_THEME } from '../actions/types';
 import { darkTheme } from '../CONSTANTS';
 
-const INITIAL_STATE = darkTheme
+const INITIAL_STATE = darkTheme;
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

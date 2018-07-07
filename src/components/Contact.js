@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLastMessageTime, getLastMessage, getUnraedBadge } from '../actions/CommonFunctions';
+import { getLastMessageTime, getLastMessage, getUnraedBadge, getAvatar } from '../actions/CommonFunctions';
 import _ from 'lodash';
 import { Text } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
@@ -42,7 +42,7 @@ class Contact extends Component {
       <Card onPress={this.fetchChatData}>
         <CardItem>
           <Left>
-            <Thumbnail source={require(`../assets/avatars/contact3.png`)} />
+            <Thumbnail source={getAvatar(avatar)} />
             <Body>
               <Text>{name}</Text>
               <Text>{lmContent}</Text>

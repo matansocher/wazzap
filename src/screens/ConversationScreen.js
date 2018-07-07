@@ -102,7 +102,7 @@ class ConversationScreen extends Component {
           );
           return arrayToReturn;
         }
-        return <span key={1} />
+        return <View key={1} />
       })
     );
   }
@@ -119,7 +119,7 @@ class ConversationScreen extends Component {
             navigateToRoute={this.navigateToRoute} />
         </View>
         <View>
-          {this.state.loading ? getCircularProgress() : <span />}
+          {this.state.loading ? getCircularProgress() : <View />}
           {this.renderMessages()}
         </View>
         <View>
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     currentChatUser: state.currentChatUser,
     currentChatMessages: state.currentChatMessages,
     user: state.user

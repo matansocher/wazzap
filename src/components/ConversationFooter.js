@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { makeMessageID, updateStatusInConversation } from '../actions/CommonFunctions';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import SmileyIcon from 'material-ui/svg-icons/social/mood';
 // import SendIcon from 'material-ui/svg-icons/content/send';
 
-// import 'emoji-mart/css/emoji-mart.css';
-// import { Picker } from 'emoji-mart';
-// import { Emoji } from 'emoji-mart';
 
 class ConversationFooter extends Component {
   constructor(props) {
@@ -70,7 +68,7 @@ class ConversationFooter extends Component {
   createSetTimeout = (userid, contactid) => {
     this.setState({ timeout: setTimeout(() => {
       updateStatusInConversation(userid, contactid, false); // stopped typing
-      window.clearTimeout(this.state.timeout); 
+      this.clearTimeout(this.state.timeout); 
       this.setState({ timeout: null });
     } , 3000) });
   }
@@ -80,7 +78,7 @@ class ConversationFooter extends Component {
     const userid = this.props.user.uid;
     const contactid = this.props.currentChatUser.info.uid;
     if(timeout) {
-      window.clearTimeout(timeout); 
+      this.clearTimeout(timeout); 
       this.setState({ timeout: null });
     } else {
       updateStatusInConversation(userid, contactid, true); // typing
@@ -88,11 +86,8 @@ class ConversationFooter extends Component {
     this.createSetTimeout(userid, contactid);
   }
 
-  handleChange = (e) => {
-    var change = {};
-    const { value, name } = e.target;
-    change[name] = value;
-    this.setState(change);
+  handleChange = (value) => {
+    this.setState({ message: value });
     this.updateStatus(); // in order the update the status to "Typing"
   }
 
@@ -122,14 +117,26 @@ class ConversationFooter extends Component {
 
   render() {
     return (
-      <View>
-        <Text>
-          Conversation Header
-        </Text>
+      <View style={styles.conversationFooter}>
+        <Icon name="smile-o" size={30} />
+        <TextInput
+          style={{ height: 50, padding: 15, fontSize: 20, borderColor: 'gray', borderWidth: 1, borderRadius: 10 }}
+          placeholder="Type a message"
+          onChangeText={this.handleChange}
+        />
+        <Icon name="md-send" size={30} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  conversationFooter: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10
+  }
+});
 
 export default ConversationFooter;
 

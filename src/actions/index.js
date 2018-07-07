@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import _ from 'lodash';
 import fire from '../firebase';
 import {
@@ -22,11 +23,15 @@ import { lightTheme, darkTheme } from '../CONSTANTS';
 
 import { getAvatarsNames } from './CommonFunctions';
 
-export function actionChangeTheme(theme) {
-  const newTheme = theme === 'dark' ? darkTheme : lightTheme;
-  return {
-    type: CHANGE_THEME,
-    payload: newTheme
+export function actionChangeTheme(isDark) {
+  console.log(isDark)
+  return dispatch => {
+    const newTheme = isDark ? darkTheme : lightTheme;
+    // AsyncStorage.setItem('isDarkTheme', isDark) // save to async storage
+    dispatch({
+      type: CHANGE_THEME,
+      payload: newTheme
+    });
   }
 }
 

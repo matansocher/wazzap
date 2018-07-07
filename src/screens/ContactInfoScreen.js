@@ -14,7 +14,7 @@ class ContactInfoScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <Text>ContactInfoScreen</Text>
         <Text>ContactInfoScreen</Text>
         <Text>ContactInfoScreen</Text>
@@ -30,7 +30,6 @@ class ContactInfoScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#373d47',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     currentChatUser: state.currentChatUser
   };
 }

@@ -84,7 +84,7 @@ class FriendsScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <View>
           <ChatsHeader searchContact={this.changeSearchContact}
             navigateToRoute={this.navigateToRoute} />
@@ -103,7 +103,6 @@ class FriendsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#373d47',
     paddingTop: 25,
     // alignItems: 'center',
     // justifyContent: 'center',
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     user: state.user,
     contactList: state.contactList,
     searchFriends: state.searchFriends

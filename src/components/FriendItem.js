@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { ListItem, Avatar } from 'react-native-elements';
-// import '../css/searchFriends.css';
+import { Card, CardItem, Left, Thumbnail, Body } from 'native-base';
+import { getAvatar } from '../actions/CommonFunctions';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import { ListItem } from 'material-ui/List';
 // import Divider from 'material-ui/Divider';
@@ -31,16 +31,16 @@ class FriendItem extends Component {
     }
     const { name, avatar } = friend;
     return (
-      <ListItem
-        title={name}
-        avatar={
-          <Avatar
-            size="large"
-            rounded
-            source={require('../assets/avatars/contact3.png')}
-          />
-        }>
-      </ListItem>
+      <Card>
+        <CardItem>
+          <Left>
+            <Thumbnail source={getAvatar(avatar)} />
+            <Body>
+              <Text>{name}</Text>
+            </Body>
+          </Left>
+        </CardItem>
+      </Card>
     );
   }
 }

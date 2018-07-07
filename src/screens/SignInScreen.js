@@ -48,7 +48,7 @@ class SignInScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <Image
           style={{ width: 100, height: 100 }}
           source={require('../assets/logo.png')}
@@ -58,12 +58,14 @@ class SignInScreen extends Component {
 
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Email"
           onChangeText={(email) => this.setState({ email })}
         />
 
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={(password) => this.setState({ password })}
@@ -77,7 +79,7 @@ class SignInScreen extends Component {
 
         <TouchableOpacity
           onPress={this.singInClick}
-          style={styles.signInButton}
+          style={[styles.signInButton, { backgroundColor: this.props.theme.secondaryColor }]}
         >
           <Icon name="pregnant-woman" size={30} color='#000000' />
 
@@ -98,12 +100,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    backgroundColor: '#373d47',
     alignItems: 'center',
     // justifyContent: 'center',
   },
   signInButton: {
-    // flex: 1,
     flexDirection: 'row',
     height: 40,
     width: 140,
@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
-    borderRadius: 10,
-    backgroundColor: '#00A865'
+    borderRadius: 10
   },
   textInput: {
     height: 40,
@@ -121,4 +120,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, actions)(SignInScreen);
+function mapStateToProps(state) {
+  return { theme: state.theme }
+}
+
+export default connect(mapStateToProps, actions)(SignInScreen);

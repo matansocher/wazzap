@@ -28,30 +28,6 @@
     // 	console.log(a);
     // })
 
-    function toDecimal(num) {
-      let counter = 0;
-      let answer = 0;
-      while (num > 0) {
-        if (num % 10 === 1) {
-          answer += Math.pow(2, counter);
-        }
-        counter++;
-        num = Math.floor(num / 10);
-      }
-      return answer;
-    }
-
-    function toBinary(num) {
-      let counter = 0;
-      let answer = 0;
-      while (num > 0) {
-        const numToAdd = num % 2 === 0 ? 0 : 1;
-        answer = numToAdd * Math.pow(10, counter) + answer;
-        counter++;
-        num = Math.floor(num / 2);
-      }
-      return answer;
-    }
 
   </script>
 </body>

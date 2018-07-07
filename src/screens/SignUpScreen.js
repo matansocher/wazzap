@@ -85,24 +85,27 @@ class SignUpScreen extends Component {
   render() {
     const avatar = getAvatar(this.state.avatar);
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
 
         {this.state.loading ? getCircularProgress() : <View />}
 
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Email"
           onChangeText={(text) => this.setState({ email: text })}
         />
 
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Name"
           onChangeText={(text) => this.setState({ name: text })}
         />
 
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={this.props.theme.primaryColor}
           secureTextEntry={true}
           placeholder="Password"
           onChangeText={(text) => this.setState({ password: text })}
@@ -127,7 +130,7 @@ class SignUpScreen extends Component {
 
         <TouchableOpacity
           onPress={this.singUpClick}
-          style={styles.signInButton}
+          style={[styles.signUpButton, { backgroundColor: this.props.theme.secondaryColor }]}
         >
           <Icon name="pregnant-woman" size={30} color='#000000' />
 
@@ -147,17 +150,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    backgroundColor: '#373d47',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  signInButton: {
+  signUpButton: {
+    flexDirection: 'row',
+    height: 40,
     width: 140, 
-    alignItems: 'center', 
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10, 
     marginBottom: 10, 
-    borderRadius: 10, 
-    backgroundColor: '#00A865'
+    borderRadius: 10
   },
   textInput: {
     height: 40, 
@@ -168,6 +172,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     avatars: state.avatars
   };
 }

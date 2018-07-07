@@ -2,9 +2,9 @@ import React from 'react';
 import fire from '../firebase';
 import _ from 'lodash';
 import { View, ActivityIndicator } from 'react-native';
+import { Badge } from 'react-native-elements';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import CircularProgress from 'material-ui/CircularProgress';
-// import Badge from 'material-ui/Badge';
 // import Divider from 'material-ui/Divider';
 
 export function raedMessage(useruid, contactid) {
@@ -13,17 +13,17 @@ export function raedMessage(useruid, contactid) {
   fire.database().ref().update(updates);
 }
 
-// export function getUnraedBadge(isUnread) {
-//   // possible - 0(marked as unraed), some number, "None" - all raed
-//   if (isUnread === "None") {
-//     return;
-//   }
-//   return (
-//     <span className="pull-right unraed-badge">
-//       <Badge badgeContent={isUnread === 0 ? "" : isUnread} primary={true} />
-//     </span>
-//   );
-// }
+export function getUnraedBadge(isUnread) {
+  // possible - 0(marked as unraed), some number, "None" - all raed
+  if (isUnread === "None" || isUnread === 0) {
+    return;
+  }
+  return (
+    <View style={{  }}>
+      <Badge value={isUnread} />
+    </View>
+  );
+}
 
 export function updateStatusInConversation(useruid, contactid, isTyping) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
   const updates = {};
@@ -267,9 +267,9 @@ export function getLastMessage(isTyping, { content }, name) {
     return "Typing..."; // "Typing"
   }
   if (content) {
-    const textWidth = (window.innerWidth - 100) / 9;
+    const textLength = 30;
     // "last message cut or full"
-    return content.length > textWidth ? `${content.substr(0, textWidth)}...` : content;
+    return content.length > textLength ? `${content.substr(0, textLength)}...` : content;
   }
   return `Start a conversation with ${name}`; // no last message
 }
@@ -285,6 +285,16 @@ export function getAvatarsNames() {
 }
 
 export function getAvatar(name) {
+
+  const fullName = `../assets/avatars/${name}`.split('').join('');
+  console.log(fullName)
+
+  if(!name) {
+    return require("../assets/avatars/default.png");
+  }
+
+  // return require(fullName);
+
   switch (name) {
     case 'contact1.png':
       return require("../assets/avatars/contact1.png");
@@ -311,11 +321,4 @@ export function getAvatar(name) {
       return require("../assets/avatars/default.png");
       break;
   }
-  const numberOfAvatars = 7;
-  const arrayOfAvatarsNames = [];
-  arrayOfAvatarsNames.push('default.png');
-  for (let i = 1; i <= numberOfAvatars; i++) { // insert names into array
-    arrayOfAvatarsNames.push(`contact${i}.png`);
-  }
-  return arrayOfAvatarsNames;
 }

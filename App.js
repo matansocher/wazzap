@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
@@ -14,7 +14,6 @@ import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
 import AuthNStatusHOC from './src/components/AuthNStatusHOC';
-import { connect } from 'react-redux';
 
 class App extends React.Component {
 
@@ -51,7 +50,7 @@ class App extends React.Component {
     //   lazyLoad: true
     // });
 
-
+    
     const MainNavigator = createBottomTabNavigator({
       Chats: { screen: createBottomTabNavigator({
         Info: InfoScreen,
@@ -63,7 +62,6 @@ class App extends React.Component {
       SignUp: SignUpScreen,
     }, {
       navigationOptions: {
-        
         // tabBarVisible: false
       },
       lazyLoad: true
@@ -79,13 +77,8 @@ class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#07377f'
-  },
+    flex: 1
+  }
 });
 
-function mapStateToProps(state) {
-  return { theme: state.theme }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

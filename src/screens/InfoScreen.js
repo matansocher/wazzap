@@ -65,7 +65,7 @@ class InfoScreen extends Component {
     const avatar = getAvatar(this.state.avatar);
     const { email, name } = this.state;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <Avatar large rounded
           source={avatar}
         />
@@ -84,7 +84,7 @@ class InfoScreen extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor="#C9CACA"
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Email"
           value={email}
           onChangeText={(email) => this.setState({ email })}
@@ -92,7 +92,7 @@ class InfoScreen extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor="#C9CACA"
+          placeholderTextColor={this.props.theme.primaryColor}
           placeholder="Name"
           value={name}
           onChangeText={(name) => this.setState({ name })}
@@ -100,7 +100,7 @@ class InfoScreen extends Component {
 
         <TouchableOpacity
           onPress={this.saveClick}
-          style={styles.saveButton}
+          style={[styles.saveButton, { backgroundColor: this.props.theme.secondaryColor} ]}
         >
           <Icon name="save" size={30} color='#000000' />
 
@@ -115,14 +115,13 @@ class InfoScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#373d47',
     alignItems: 'center',
     paddingTop: 50
     // justifyContent: 'center',
   },
   textInput: {
     height: 40, 
-    padding: 5,
+    padding: 15,
     borderWidth: 0.3, 
     borderRadius: 10, 
     width: '80%',
@@ -139,13 +138,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
-    borderRadius: 10,
-    backgroundColor: '#00A865'
+    borderRadius: 10
   }
 });
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     user: state.user,
     avatars: state.avatars
   };

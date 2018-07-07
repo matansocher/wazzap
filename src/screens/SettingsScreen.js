@@ -21,43 +21,41 @@ class SettingsScreen extends Component {
   }
 
   darkModeSwitchChange = (value) => {
-    this.setState({ darkModeSwitch: value })
+    this.setState({ darkModeSwitch: value });
+    this.props.actionChangeTheme(value); // true - dark, false - light
   }
 
   notificationsSwitchChange = (value) => {
-    this.setState({ notificationsSwitch: value })
+    this.setState({ notificationsSwitch: value });
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <Text>Dark Mode</Text>
         <Switch
-          onValueChange={(value) => darkModeSwitchChange(value)}
+          onValueChange={this.darkModeSwitchChange}
           value={this.state.darkModeSwitch} />
         <Text>notifications</Text>
         <Switch
-          onValueChange={(value) => notificationsSwitchChange(value)}
+          onValueChange={this.notificationsSwitchChange}
           value={this.state.notificationsSwitch}
         />
-      </View >
+      </View>
     );
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#373d47',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
 
-// function mapStateToProps(state) {
-//   return { likedJobs: state.likedJobs };
-// }
+function mapStateToProps(state) {
+  return { theme: state.theme };
+}
 
-export default connect(null, actions)(SettingsScreen);
-export default SettingsScreen;
+export default connect(mapStateToProps, actions)(SettingsScreen);

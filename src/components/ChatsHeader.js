@@ -44,7 +44,7 @@ class ChatsHeader extends Component {
 
   render() {
     return (
-      <View style={{ backgroundColor: '#373d47', padding: 15 }}>
+      <View style={{ backgroundColor: this.props.theme.primaryBackgroundColor, padding: 15 }}>
         <Ionicons
           style={{ paddingLeft: 10, }}
           name='md-search'
@@ -61,4 +61,8 @@ class ChatsHeader extends Component {
   }
 }
 
-export default connect(null, actions)(ChatsHeader);
+function mapStateToProps(state) {
+  return { theme: state.theme }
+}
+
+export default connect(mapStateToProps, actions)(ChatsHeader);

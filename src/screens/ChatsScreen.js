@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, ScrollView } from 'react-native';
+import { AsyncStorage, StyleSheet, View, Text, Button, ScrollView } from 'react-native';
 import { Icon, List } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
@@ -32,25 +32,31 @@ class ChatsScreen extends Component {
   componentDidMount() {
     // window.addEventListener("beforeunload", this.onUnload);
     console.log("did mount")
+    this.setTheme();
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         this.fetchData(user.uid);
         // this.preActionFetchFriendsList(user.uid, () => { });
       } else {
         this.props.actionLogoutUser();
-        this.props.navigation.navigate('/SignIn');
+        this.props.navigation.navigate('SignIn');
       }
     });
+  }
+
+  setTheme = async () => {
+    // let theme = await AsyncStorage.getItem('isDarkTheme'); // boolean
+    let theme = true;
+    this.props.actionChangeTheme(theme);
   }
 
   fetchData = (uid) => {
     console.log(uid)
     this.setState({ loading: true }, () => {
-      const lastSeen = "Online";
       this.props.actionFetchFriendsList(uid, () => {
         this.props.actionFetchUserData(uid, () => {
           // console.log("2")
-          // updateLastSeen(uid, lastSeen, () => {
+          // updateLastSeen(uid, "Online", () => {
           //   this.setState({ loading: false });
           // })
         });
@@ -144,7 +150,7 @@ class ChatsScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
         <View>
           <ChatsHeader searchContact={this.changeSearchContact}
             navigateToRoute={this.navigateToRoute} />
@@ -163,7 +169,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // height: 100,
-    backgroundColor: '#373d47',
     paddingTop: 25,
     // alignItems: 'center',
     // justifyContent: 'center',
@@ -172,6 +177,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    theme: state.theme,
     contactList: state.contactList,
     user: state.user
   };
