@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
-// import { Icon } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from 'react-native-elements';
+// import { Ionicons } from '@expo/vector-icons';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
@@ -43,21 +43,46 @@ class ChatsHeader extends Component {
   }
 
   render() {
+    const { primaryColor, primaryBackgroundColor } = this.props.theme;
     return (
-      <View style={{ backgroundColor: this.props.theme.primaryBackgroundColor, padding: 15 }}>
-        <Ionicons
-          style={{ paddingLeft: 10, }}
-          name='md-search'
+      <View style={[ styles.container, { backgroundColor: primaryBackgroundColor }]}>
+        <Icon
+          style={ styles.iconStyle }
+          name='search'
           size={24}
-          color='#ffffff' />
+          color={ primaryColor } />
 
         <TextInput
-          style={{ height: 50, padding: 15, fontSize: 20, borderColor: 'gray', borderWidth: 1, borderRadius: 10 }}
+          style={ styles.textInputStyle }
           placeholder="Search Contacts"
+          placeholderTextColor={ primaryColor }
           onChangeText={this.handleChangeSearchTerm}
         />
       </View>
     );
+  }
+}
+
+const styles = {
+  container: {
+    height: 45,
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  textInputStyle: {
+    flex: 8, 
+    height: 40, 
+    padding: 10, 
+    fontSize: 16, 
+    borderColor: 'grey', 
+    borderWidth: 2, 
+    borderRadius: 10
+  },
+  iconStyle: {
+    flex: 1, 
+    padding: 10, 
   }
 }
 

@@ -5,7 +5,8 @@ import { Divider } from 'react-native-elements';
 // import * as actions from '../actions/index';
 import _ from 'lodash';
 import { getAvatarsNames } from '../actions/CommonFunctions';
-import { getCircularProgress } from '../actions/CommonFunctions';
+import DividerContacts from './common/DividerContacts';
+import CircularProgress from './common/CircularProgress';
 
 const width = Dimensions.get('window').width;
 
@@ -42,18 +43,20 @@ class AvatarPicker extends Component {
 
   render() {
     if (_.isEmpty(this.props.avatars)) {
-      return getCircularProgress()
+      return <CircularProgress />
     }
     return (
       <View style={{ backgroundColor: '#262B34' }}>
-        <Divider style={{ backgroundColor: '#9295b5' }} />
-        <Picker 
+        <DividerContacts color={'#9295b5'} /> >
+        {/* <Divider style={{ backgroundColor: '#9295b5' }} /> */}
+        <Picker
           selectedValue={this.props.avatar}
           onValueChange={this.changeAvatar}
           style={{ width: width - 100 }}>
           {this.renderAvatars()}
         </Picker>
-        <Divider style={{ backgroundColor: '#9295b5' }} />
+        <DividerContacts color={'#9295b5'} /> >
+        {/* <Divider style={{ backgroundColor: '#9295b5' }} /> */}
       </View>
     );
   }

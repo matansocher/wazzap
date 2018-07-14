@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import fire from '../firebase';
 import _ from 'lodash';
-import { filterBySearch, sortContactsByLastMessageTime, splitToPinned, getCircularProgress } from '../actions/CommonFunctions'
+import { filterBySearch, sortContactsByLastMessageTime, splitToPinned } from '../actions/CommonFunctions'
 
 import Contact from '../components/Contact';
 import ChatsHeader from '../components/ChatsHeader';
+import CircularProgress from '../components/common/CircularProgress';
 
 class ChatsScreen extends Component {
 
@@ -57,7 +58,7 @@ class ChatsScreen extends Component {
         this.props.actionFetchUserData(uid, () => {
           // console.log("2")
           // updateLastSeen(uid, "Online", () => {
-          //   this.setState({ loading: false });
+            this.setState({ loading: false });
           // })
         });
       });
@@ -67,9 +68,11 @@ class ChatsScreen extends Component {
   fetchChatData = (contact) => {
     this.setState({ loading: true }, () => {
       const useruid = this.props.user.uid;
+      console.log(useruid)
+      console.log(contact)
       this.props.actionFetchChatData(useruid, contact, () => {
         this.setState({ loading: false })
-        this.props.navigation.navigate('/Conversation');
+        this.props.navigation.navigate('Conversation');
       });
     })
   }
@@ -116,8 +119,9 @@ class ChatsScreen extends Component {
   renderContacts() {
     if (_.isEmpty(this.props.contactList) && !this.state.loading) {
       if (!this.state.loading) {
+        const { primaryBackgroundColor } = this.props.theme;
         return (
-          <View>
+          <View style={[styles.emptyList, { backgroundColor: primaryBackgroundColor }]}>
             <Text>You have no conversations yet</Text>
             <Button
               onPress={() => this.navigateToRoute('Friends')}
@@ -128,7 +132,7 @@ class ChatsScreen extends Component {
           </View>
         );
       } else
-        return (getCircularProgress());
+        return (<CircularProgress />);
     }
     let contacts = _.values(this.props.contactList);
     if (this.state.searchTerm !== '' && contacts && !_.isEmpty(contacts))
@@ -139,6 +143,7 @@ class ChatsScreen extends Component {
       contacts.map(contact => {
         return <Contact key={contact.info.email}
           contact={contact}
+          theme={this.props.theme}
           lastMessage={contact.lastMessage}
           fetchChatData={this.fetchChatData}
           deleteContactChat={this.deleteContactChat}
@@ -156,6 +161,7 @@ class ChatsScreen extends Component {
             navigateToRoute={this.navigateToRoute} />
         </View>
         <ScrollView>
+          { this.state.loading ? <CircularProgress /> : <View /> }
           <List>
             {this.renderContacts()}
           </List>
@@ -173,6 +179,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  emptyList: {
+    flex:1, 
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 function mapStateToProps(state) {
@@ -184,27 +195,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(ChatsScreen);
-
-// render() {
-//   return (
-//     <MuiThemeProvider>
-//       <div>
-
-//         <Snackbar open={this.state.gesture} message={this.state.gestureText}
-//           autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
-
-//         <div className="chats-header">
-//           <ChatsHeader searchContact={this.searchContact}
-//             navigateToRoute={this.navigateToRoute} />
-//         </div>
-
-//         <div className="scrollable-chats">
-//           {this.state.loading ? getCircularProgress() : <View />}
-//           <List>
-//             {this.renderList()}
-//           </List>
-//         </div>
-//       </div>
-//     </MuiThemeProvider>
-//   );
-// }

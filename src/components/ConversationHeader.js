@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import _ from 'lodash';
-import { getLastSeenString, getAvatar } from '../actions/CommonFunctions';
+import { getLastSeenString } from '../actions/CommonFunctions';
 import { View, Text } from 'react-native';
-import { Card, CardItem, Left, Thumbnail, Body } from 'native-base';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import { ListItem } from 'material-ui/List';
-// import Avatar from 'material-ui/Avatar';
-// import IconMenu from 'material-ui/IconMenu';
-// import MenuItem from 'material-ui/MenuItem';
-// import IconButton from 'material-ui/IconButton';
-// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-// import BackIcon from 'material-ui/svg-icons/navigation/arrow-back';
+import { Icon } from 'react-native-elements';
+import UserAvatar from './common/UserAvatar';
 
 class ConversationHeader extends Component {
   constructor(props) {
@@ -26,44 +19,73 @@ class ConversationHeader extends Component {
     this.props.deleteContactChat(this.props.currentChatUser);
   }
 
-  backClick = () => {
-    this.props.navigateToRoute('/');
-  }
-
   infoClicked = () => {
     this.props.navigateToRoute('ContactInfo');
   }
 
   render() {
     if (_.isEmpty(this.props.currentChatUser)) {
-      return;
+      return null;
     }
     const { name, avatar, lastSeen, isTyping } = this.props.currentChatUser.info;
+    const { primaryBackgroundColor, primaryColor } = this.props.theme;
+    const lastSeenString = getLastSeenString(isTyping, lastSeen);
+    // , { backgroundColor: primaryBackgroundColor }
     return (
-      <View>
-        <Card onPress={this.infoClicked}>
-          <CardItem>
-            <Left>
-              <Thumbnail source={getAvatar(avatar)} />
-              <Body>
-                <Text>{name}</Text>
-                <Text>{getLastSeenString(isTyping, lastSeen)}</Text>
-              </Body>
-            </Left>
-          </CardItem>
-        </Card>
+      <View style={[styles.container]}>
+
+        <View style={styles.contactDetails} onPress={this.infoClicked}>
+          <View style={styles.contactImage}>
+            <UserAvatar avatar={avatar} />
+          </View>
+          <View style={styles.contactTexts}>
+            <Text style={{ color: primaryColor, fontWeight: 'bold' }}>
+              {name}
+            </Text>
+            <Text style={{ color: primaryColor }}>
+              {lastSeenString}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.contactActions}>
+          <Icon name="android" size={20} color={primaryColor} />
+          <Icon name="flight-land" size={20} color={primaryColor} />
+          <Icon name="fingerprint" size={20} color={primaryColor} />
+        </View>
+
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  conversationFooter: {
+const styles = {
+  container: {
+    height: 45,
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  contactDetails: {
+    flex: 2,
+    flexDirection: 'row',
+  },
+  contactImage: {
+    flex: 1,
+    padding: 5
+  },
+  contactTexts: {
+    flex: 3,
+    flexDirection: 'column',
+    padding: 10
+  },
+  contactActions: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10
+    justifyContent: 'space-between'
   }
-});
+};
 
 function mapStateToProps(state) {
   return {
@@ -72,32 +94,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(ConversationHeader);
-
-{/* <MuiThemeProvider>
-        <div>
-
-          <BackIcon className="pull-left icon back-icon"
-            onClick={this.backClick} />
-
-          <ListItem
-            className="contact-info"
-            primaryText={name}
-            secondaryText={<Text style={{ color: '#ffffff' }}>{getLastSeenString(isTyping, lastSeen)}</Text>}
-            onClick={this.infoClicked}
-            style={{ color: '#ffffff' }}
-            leftAvatar={
-              <Avatar size={45} src={require(`../avatars/${avatar}`)}
-                style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
-            }
-          />
-          <IconMenu
-            className="three-dots-conversation-header"
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-          >
-            <MenuItem onClick={this.deleteContactChat} primaryText="Delete Chat" />
-          </IconMenu>
-
-        </div>
-      </MuiThemeProvider> */}

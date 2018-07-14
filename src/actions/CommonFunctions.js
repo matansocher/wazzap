@@ -1,28 +1,11 @@
-import React from 'react';
+// import React from 'react';
 import fire from '../firebase';
 import _ from 'lodash';
-import { View, ActivityIndicator } from 'react-native';
-import { Badge } from 'react-native-elements';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import CircularProgress from 'material-ui/CircularProgress';
-// import Divider from 'material-ui/Divider';
 
 export function raedMessage(useruid, contactid) {
   const updates = {};
   updates[`friendships/${useruid}/${contactid}/isUnraed`] = "None";
   fire.database().ref().update(updates);
-}
-
-export function getUnraedBadge(isUnread) {
-  // possible - 0(marked as unraed), some number, "None" - all raed
-  if (isUnread === "None" || isUnread === 0) {
-    return;
-  }
-  return (
-    <View style={{  }}>
-      <Badge value={isUnread} />
-    </View>
-  );
 }
 
 export function updateStatusInConversation(useruid, contactid, isTyping) { // updates to "Online", "Last seen 01.01.2010" or "Typing"
@@ -125,27 +108,6 @@ export function getCorrectHour(time) {
   minute = minute < 10 ? `0${minute}` : minute;
   return `${hour}:${minute}`
 }
-
-export function getCircularProgress() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <ActivityIndicator size="small" color="#00ff00" />
-    </View>
-  );
-}
-
-// export function getChatBubbleDate(nextMessage) {
-//   let lastTime = getLastMessageTime(nextMessage);
-//   lastTime = lastTime.includes(":") ? "Toady" : lastTime;
-//   return (
-//     <div key={nextMessage.date}>
-//       <div className="day-indicator">
-//         {lastTime}
-//       </div>
-//       <Divider />
-//     </div>
-//   )
-// }
 
 export function filterBySearch(array, subString) {
   return _.filter(array, contact => {
@@ -282,43 +244,4 @@ export function getAvatarsNames() {
     arrayOfAvatarsNames.push(`contact${i}.png`);
   }
   return arrayOfAvatarsNames;
-}
-
-export function getAvatar(name) {
-
-  const fullName = `../assets/avatars/${name}`.split('').join('');
-  console.log(fullName)
-
-  if(!name) {
-    return require("../assets/avatars/default.png");
-  }
-
-  // return require(fullName);
-
-  switch (name) {
-    case 'contact1.png':
-      return require("../assets/avatars/contact1.png");
-      break;
-    case 'contact2.png':
-      return require("../assets/avatars/contact2.png");
-      break;
-    case 'contact3.png':
-      return require("../assets/avatars/contact3.png");
-      break;
-    case 'contact4.png':
-      return require("../assets/avatars/contact4.png");
-      break;
-    case 'contact5.png':
-      return require("../assets/avatars/contact5.png");
-      break;
-    case 'contact6.png':
-      return require("../assets/avatars/contact6.png");
-      break;
-    case 'contact7.png':
-      return require("../assets/avatars/contact7.png");
-      break;
-    default:
-      return require("../assets/avatars/default.png");
-      break;
-  }
 }

@@ -9,6 +9,8 @@ import InfoScreen from './src/screens/InfoScreen';
 import ChatsScreen from './src/screens/ChatsScreen';
 import FriendsScreen from './src/screens/FriendsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
+import ConversationScreen from './src/screens/ConversationScreen';
+import ContactInfoScreen from './src/screens/ContactInfoScreen';
 
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -55,7 +57,13 @@ class App extends React.Component {
       Chats: { screen: createBottomTabNavigator({
         Info: InfoScreen,
         Friends: FriendsScreen,
-        Chats: ChatsScreen,
+        Chats: {
+          screen: createStackNavigator({
+            Chats: { screen: ChatsScreen },
+            Conversation: { screen: ConversationScreen },
+            ContactInfo: { screen: ContactInfoScreen },
+          })
+        }, 
         Settings: SettingsScreen
       })},
       SignIn: SignInScreen,
@@ -64,7 +72,7 @@ class App extends React.Component {
       navigationOptions: {
         // tabBarVisible: false
       },
-      lazyLoad: true
+      // lazyLoad: true
     });
 
     return (

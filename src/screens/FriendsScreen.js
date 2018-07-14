@@ -4,10 +4,11 @@ import { Icon, List } from 'react-native-elements';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import * as actions from '../actions/index';
-import { getCircularProgress, filterBySearch } from '../actions/CommonFunctions';
+import { filterBySearch } from '../actions/CommonFunctions';
 
 import FriendsItem from '../components/FriendItem';
 import ChatsHeader from '../components/ChatsHeader';
+import CircularProgress from '../components/common/CircularProgress';
 
 class FriendsScreen extends Component {
   static navigationOptions = {
@@ -89,6 +90,7 @@ class FriendsScreen extends Component {
           <ChatsHeader searchContact={this.changeSearchContact}
             navigateToRoute={this.navigateToRoute} />
         </View>
+        {this.state.loading ? <CircularProgress /> : <View />}
         <ScrollView>
           <List>
             {this.renderList()}
@@ -119,31 +121,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions)(FriendsScreen);
-
-
-{/* <div className="center">
-<MuiThemeProvider>
-  <div className="center">
-
-    <Snackbar open={this.state.gesture} message={this.state.gestureText}
-      autoHideDuration={4000} onRequestClose={this.handleRequestClose} />
-
-
-    <FlatButton className="pull-left back-button-user-info" label="Back" primary={true} onClick={this.backClick}>
-      <BackIcon className="pull-left back-user-info" />
-    </FlatButton>
-
-      <h1>Search Friends</h1>
-      <div className="search-chats">
-        <input className="form-control text-input" placeholder="Search" name="searchTerm"
-          value={this.state.searchTerm} onChange={this.handleChange} />
-      </div>
-    {this.state.loading ? getCircularProgress() : <span />}
-
-    <List>
-      {this.renderList()}
-    </List>
-
-  </div>
-</MuiThemeProvider>
-</div> */}

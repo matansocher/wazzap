@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 import fire from '../firebase';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { getCircularProgress } from '../actions/CommonFunctions';
+import CircularProgress from '../components/common/CircularProgress';
 
 const width = Dimensions.get('window').width;
 
@@ -47,25 +47,26 @@ class SignInScreen extends Component {
   // }
 
   render() {
+    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
     return (
-      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
         <Image
           style={{ width: 100, height: 100 }}
           source={require('../assets/logo.png')}
         />
 
-        {this.state.loading ? getCircularProgress() : <View />}
+        {this.state.loading ? <CircularProgress /> : <View />}
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Email"
           onChangeText={(email) => this.setState({ email })}
         />
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={(password) => this.setState({ password })}
@@ -79,7 +80,7 @@ class SignInScreen extends Component {
 
         <TouchableOpacity
           onPress={this.singInClick}
-          style={[styles.signInButton, { backgroundColor: this.props.theme.secondaryColor }]}
+          style={[styles.signInButton, { backgroundColor: secondaryColor }]}
         >
           <Icon name="pregnant-woman" size={30} color='#000000' />
 

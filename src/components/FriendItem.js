@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
+import { View, Text, Alert } from 'react-native';
 import _ from 'lodash';
-import { Card, CardItem, Left, Thumbnail, Body } from 'native-base';
-import { getAvatar } from '../actions/CommonFunctions';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import { ListItem } from 'material-ui/List';
-// import Divider from 'material-ui/Divider';
-// import Avatar from 'material-ui/Avatar';
-// import IconMenu from 'material-ui/IconMenu';
-// import MenuItem from 'material-ui/MenuItem';
-// import IconButton from 'material-ui/IconButton';
-// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import { Icon } from 'react-native-elements';
+import DividerContacts from './common/DividerContacts';
+import UserAvatar from './common/UserAvatar';
 
 class FriendItem extends Component {
   constructor(props) {
@@ -20,54 +14,75 @@ class FriendItem extends Component {
   }
 
   addAsFriend = () => {
-    this.props.addAsFriend(this.props.friend);
+    console.log("add as friend triggered")
+    // this.props.addAsFriend(this.props.friend);
+  }
+
+  handleFriendPress = () => {
+    Alert.alert(
+      'Alert',
+      'Are you sure you want to add that contact?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Yes', onPress: () => this.addAsFriend },
+      ],
+      { cancelable: false }
+    )
   }
 
   render() {
     console.log(this.props.friend)
     const { friend } = this.props;
-    if(_.isEmpty(friend) || !friend.name || ! friend.avatar) {
+    if (_.isEmpty(friend) || !friend.name || !friend.avatar) {
       return <View />
     }
     const { name, avatar } = friend;
     return (
-      <Card>
-        <CardItem>
-          <Left>
-            <Thumbnail source={getAvatar(avatar)} />
-            <Body>
-              <Text>{name}</Text>
-            </Body>
-          </Left>
-        </CardItem>
-      </Card>
+      <View>
+        <View onPress={this.handleFriendPress} style={[styles.contactContainer, { backgroundColor: primaryBackgroundColor }]}>
+
+          <View style={styles.avatarContainer}>
+            <UserAvatar avatar={avatar} />
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={[styles.boldText, { color: primaryColor }]}>
+              {name}
+            </Text>
+          </View>
+
+          <View style={styles.nextArrowContainer}>
+            <Icon name="navigate-next" size={30} color={primaryColor} />
+          </View>
+        </View>
+        <DividerContacts color={primaryColor} />
+      </View>
     );
   }
 }
 
+const styles = {
+  contactContainer: {
+    height: 90,
+    flexDirection: 'row'
+  },
+  avatarContainer: {
+    flex: 2,
+    padding: 15
+  },
+  textContainer: {
+    flex: 6,
+    padding: 15
+  },
+  boldText: {
+    fontWeight: 'bold'
+  },
+  nextArrowContainer: {
+    flex: 1,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'flex-end'
+  }
+}
+
 export default FriendItem;
-
-{/* <div className="friend">
-<MuiThemeProvider>
-  <div>
-    <ListItem
-      style={{ color: '#ffffff' }}
-      primaryText={name}
-      leftAvatar={
-        <Avatar size={45} src={require(`../avatars/${avatar}`)}
-          style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
-      }
-    />
-
-    <IconMenu
-      className="pull-right three-dots-add-friend"
-      iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    >
-      <MenuItem primaryText="Add As Friend" onClick={this.addAsFriend} />
-    </IconMenu>
-    <Divider />
-  </div>
-</MuiThemeProvider>
-</div> */}

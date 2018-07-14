@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import _ from 'lodash';
 import AvatarPicker from '../components/AvatarPicker';
-import { getAvatar } from '../actions/CommonFunctions';
+import UserAvatar from '../components/common/UserAvatar';
 
 class InfoScreen extends Component {
   static navigationOptions = {
@@ -62,18 +62,15 @@ class InfoScreen extends Component {
   }
 
   render() {
-    const avatar = getAvatar(this.state.avatar);
-    const { email, name } = this.state;
+    const { email, name, avatar } = this.state;
+    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
     return (
-      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
-        <Avatar large rounded
-          source={avatar}
-        />
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
+        <UserAvatar avatar={avatar} />
 
         <Button
-          title={this.state.editingAvatar ? "Save" : "Edit"}
+          title={this.state.editingAvatar ? "Save" : "Edit Avatar"}
           onPress={this.handleEditAvatar}
-          color="#e854ea"
           accessibilityLabel="Update Avatar"
         />
 
@@ -84,7 +81,7 @@ class InfoScreen extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Email"
           value={email}
           onChangeText={(email) => this.setState({ email })}
@@ -92,7 +89,7 @@ class InfoScreen extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Name"
           value={name}
           onChangeText={(name) => this.setState({ name })}
@@ -100,11 +97,11 @@ class InfoScreen extends Component {
 
         <TouchableOpacity
           onPress={this.saveClick}
-          style={[styles.saveButton, { backgroundColor: this.props.theme.secondaryColor} ]}
+          style={[styles.saveButton, { backgroundColor: secondaryColor } ]}
         >
-          <Icon name="save" size={30} color='#000000' />
+          <Icon name="save" size={30} color={primaryBackgroundColor} />
 
-          <Text style={{ fontSize: 24 }} > Update Info </Text>
+          <Text style={{ fontSize: 24, color: primaryBackgroundColor }} > Update Info </Text>
         </TouchableOpacity>
       </View>
     );

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { Avatar, Divider, Icon } from 'react-native-elements';
-// import { Ionicons } from '@expo/vector-icons';
 import fire from '../firebase';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { validateEmail, validatePassword, getCircularProgress, getAvatar } from '../actions/CommonFunctions';
+import { validateEmail, validatePassword } from '../actions/CommonFunctions';
 import AvatarPicker from '../components/AvatarPicker';
+import DividerContacts from '../components/common/DividerContacts';
+import CircularProgress from '../components/common/CircularProgress';
+import UserAvatar from '../components/common/UserAvatar';
 
 const width = Dimensions.get('window').width;
 
@@ -83,44 +85,45 @@ class SignUpScreen extends Component {
   }
 
   render() {
-    const avatar = getAvatar(this.state.avatar);
+    const { avatar } = this.state;
+    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
     return (
-      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
 
-        {this.state.loading ? getCircularProgress() : <View />}
+        {this.state.loading ? <CircularProgress /> : <View />}
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Email"
           onChangeText={(text) => this.setState({ email: text })}
         />
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           placeholder="Name"
           onChangeText={(text) => this.setState({ name: text })}
         />
 
         <TextInput
           style={styles.textInput}
-          placeholderTextColor={this.props.theme.primaryColor}
+          placeholderTextColor={primaryColor}
           secureTextEntry={true}
           placeholder="Password"
           onChangeText={(text) => this.setState({ password: text })}
         />
 
-        <Avatar large rounded
-          source={avatar}
-        />
+        <UserAvatar avatar={avatar} />
 
-        <Divider style={{ backgroundColor: 'blue' }} />
+        {/* <Divider style={{ backgroundColor: 'blue' }} /> */}
+        <DividerContacts color={'blue'} />
 
         <AvatarPicker avatars={this.props.avatars} avatar={this.state.avatar}
           changeAvatar={this.changeAvatar} />
 
-        <Divider style={{ backgroundColor: 'blue' }} />
+        {/* <Divider style={{ backgroundColor: 'blue' }} /> */}
+        <DividerContacts color={'blue'} />
 
         {this.state.signInMessage ?
           <Text style={{ color: 'red', fontWeight: 'bold' }}>
@@ -130,11 +133,11 @@ class SignUpScreen extends Component {
 
         <TouchableOpacity
           onPress={this.singUpClick}
-          style={[styles.signUpButton, { backgroundColor: this.props.theme.secondaryColor }]}
+          style={[styles.signUpButton, { backgroundColor: secondaryColor }]}
         >
           <Icon name="pregnant-woman" size={30} color='#000000' />
 
-          <Text style={{ fontSize: 24 }} > Sign In </Text>
+          <Text style={{ fontSize: 24 }} > Sign Up </Text>
         </TouchableOpacity>
 
         <Button

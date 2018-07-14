@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import fire from '../firebase';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { Icon } from 'react-native-elements';
-import { getCircularProgress, compareDates, getChatBubbleDate, raedMessage } from '../actions/CommonFunctions';
+import { compareDates, raedMessage } from '../actions/CommonFunctions';
 import ConversationHeader from '../components/ConversationHeader';
 import ConversationFooter from '../components/ConversationFooter';
+import Message from '../components/Message';
+import ChatTimeBubble from '../components/common/ChatTimeBubble';
+import CircularProgress from '../components/common/CircularProgress';
 
 class ConversationScreen extends Component {
 
@@ -22,13 +25,14 @@ class ConversationScreen extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
-    if (!_.isEmpty(this.props.user)) {
-      const useruid = this.props.user.uid;
-      const contactid = this.props.currentChatUser.info.uid;
-      raedMessage(useruid, contactid);
-      this.preActionFetchChatData(useruid, this.props.currentChatUser, () => {})
+    console.log(this.props.user)
+    // if (!_.isEmpty(this.props.user)) {
+    //   const useruid = this.props.user.uid;
+    //   const contactid = this.props.currentChatUser.info.uid;
+      // raedMessage(useruid, contactid);
+      // this.preActionFetchChatData(useruid, this.props.currentChatUser, () => {})
       // this.props.actionMarkRaedUnraed(useruid, contact, "None", () => {});
-    }
+    // }
   }
 
   // preActionFetchChatData = (useruid, contact, callback) => {
@@ -92,12 +96,19 @@ class ConversationScreen extends Component {
           let arrayToReturn = [];
           if (index !== messages.length - 1) { // not the last message
             if (!compareDates(message.date, messages[index + 1].date)) { // need to show another bubble 
-              arrayToReturn.push(getChatBubbleDate(messages[index + 1]));
+              arrayToReturn.push(
+                <ChatTimeBubble key={messages[index + 1]} 
+                  theme={this.props.theme}
+                  nextMessage={messages[index + 1]} />
+              );
             }
           }
           arrayToReturn.push(
-            <Message key={message.id} message={message}
-              user={this.props.user} currentChatUser={this.props.currentChatUser}
+            <Message key={message.id} 
+              theme={this.props.theme}
+              message={message}
+              user={this.props.user} 
+              currentChatUser={this.props.currentChatUser}
               deleteMessage={this.deleteMessage} />
           );
           return arrayToReturn;
@@ -108,32 +119,32 @@ class ConversationScreen extends Component {
   }
 
   render() {
+    const { primaryBackgroundColor } = this.props.theme;
     return (
-      <View style={styles.container}>
-        <View>
-          <ConversationHeader user={this.props.user}
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
+        <View style={styles.headerContainer}>
+          <ConversationHeader 
+            theme={this.props.theme}
+            user={this.props.user}
             currentChatUser={this.props.currentChatUser}
-            backToChats={this.navigateToRoute}
-            contactInfoShow={this.navigateToRoute}
             deleteContactChat={this.deleteContactChat}
             navigateToRoute={this.navigateToRoute} />
         </View>
-        <View>
-          {this.state.loading ? getCircularProgress() : <View />}
-          {this.renderMessages()}
+        {/* , {backgroundColor: primaryBackgroundColor } */}
+        <View style={[styles.messageContainer]}>
+          <ScrollView>
+            {this.state.loading ? <CircularProgress /> : <View />}
+            {this.renderMessages()}
+          </ScrollView>
         </View>
-        <View>
+    
+        <View style={styles.footerContainer}>
           <ConversationFooter 
+            theme={this.props.theme}
             user={this.props.user}
             currentChatUser={this.props.currentChatUser}
             sendMessage={this.sendMessage} />
         </View>
-        <Text>ConversationScreen</Text>
-        <Text>ConversationScreen</Text>
-        <Text>ConversationScreen</Text>
-        <Text>ConversationScreen</Text>
-        <Text>ConversationScreen</Text>
-        <Text>ConversationScreen</Text>
       </View>
     );
   }
@@ -142,11 +153,19 @@ class ConversationScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
+  headerContainer: {
+    height: 60,
+  },
+  messageContainer: {
+    flex: 1,
+    top: 60,
+    bottom: 40
+  },
+  footerContainer: {
+    height: 60
+  }
 });
 
 function mapStateToProps(state) {

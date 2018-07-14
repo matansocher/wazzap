@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { getLastMessageTime, getLastMessage, getUnraedBadge, getAvatar } from '../actions/CommonFunctions';
+import { TouchableOpacity, View, Text } from 'react-native';
 import _ from 'lodash';
-import { Text } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
-import { Card, CardItem, Left, Thumbnail, Body } from 'native-base';
+import { getLastMessageTime, getLastMessage } from '../actions/CommonFunctions';
+import BadgeMessage from './common/BadgeMessage';
+import DividerContacts from './common/DividerContacts';
+import UserAvatar from './common/UserAvatar';
+import { Icon } from 'react-native-elements';
 
 
 class Contact extends Component {
@@ -38,94 +40,79 @@ class Contact extends Component {
     const { lastMessage } = this.props;
     const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
     const lmContent = getLastMessage(isTyping, lastMessage || false, name);
-    return(
-      <Card onPress={this.fetchChatData}>
-        <CardItem>
-          <Left>
-            <Thumbnail source={getAvatar(avatar)} />
-            <Body>
-              <Text>{name}</Text>
-              <Text>{lmContent}</Text>
-            </Body>
-          </Left>
-        </CardItem>
-      </Card>
+    const { primaryBackgroundColor, primaryColor, thirdColor } = this.props.theme;
+    return (
+      <TouchableOpacity onPress={this.fetchChatData}>
+        <View style={[styles.contactContainer, { backgroundColor: primaryBackgroundColor }]}>
+
+          <View style={styles.avatarContainer}>
+            <UserAvatar avatar={avatar} />
+          </View>
+
+          <View style={styles.textContainer}>
+            <Text style={[styles.boldText, { color: primaryColor }]}>
+              {name}
+            </Text>
+            <Text style={{ color: primaryColor }}>
+              {lmContent}
+            </Text>
+          </View>
+
+          <View style={styles.timeContainer}>
+            <Text style={[styles.lastMessageTimeText, { color: primaryColor }]}>{lastMessageTime}</Text>
+
+            {pinned ? <Icon name="star-border" size={30} color={primaryColor} /> : <View />}
+
+            <BadgeMessage isUnraed={isUnraed}
+              thirdColor={thirdColor} primaryColor={primaryColor} />
+          </View>
+
+          <View style={styles.nextArrowContainer}>
+            <Icon name="navigate-next" size={30} color={primaryColor} />
+          </View>
+        </View>
+        <DividerContacts color={primaryColor} /> >
+      </TouchableOpacity>
     )
   }
 }
 
+const styles = {
+  contactContainer: {
+    height: 90,
+    // borderWidth: 3,
+    // borderColor: 'white',
+    flexDirection: 'row'
+  },
+  boldText: {
+    fontWeight: 'bold'
+  },
+  avatarContainer: {
+    flex: 2,
+    padding: 15
+  },
+  textContainer: {
+    flex: 6,
+    padding: 15
+  },
+  nextArrowContainer: {
+    // backgroundColor: 'green',
+    flex: 1,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'flex-end'
+  },
+  timeContainer: {
+    flexDirection: 'column',
+    // backgroundColor: 'red',
+    flex: 3,
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  lastMessageTimeText: {
+    fontSize: 10
+  }
+}
+
 export default Contact;
-
-
-// render() {
-//   // this.props.contact === {info}, {lastMessage}, pinned, key, [[[[numOfUnread]]]]
-//   const { name, avatar } = this.props.contact.info;
-//   const { pinned, isUnraed, isTyping } = this.props.contact;
-//   const { lastMessage } = this.props;
-//   const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
-//   const lmContent = getLastMessage(isTyping, lastMessage || false, name);
-//   return (
-//     <ListItem
-//     style={{ height: 200 }}
-//       title={name}
-//       subtitle={lmContent}
-//       avatar={
-//         <Avatar
-//           size="large"
-//           rounded
-//           source={require(`../assets/avatars/contact3.png`)}
-//         />
-//       }
-//       // avatar={require(`../assets/avatars/${avatar}.png`)}
-//       onPress={this.fetchChatData}>
-//     </ListItem>
-//   )
-
-  // this.props.contact === {info}, {lastMessage}, pinned, key, [[[[numOfUnread]]]]
-  // const { name, avatar } = this.props.contact.info;
-  // const { pinned, isUnraed, isTyping } = this.props.contact;
-  // const { lastMessage } = this.props;
-  // const lastMessageTime = !_.isEmpty(lastMessage) ? getLastMessageTime(lastMessage) : " ";
-  // const lmContent = getLastMessage(isTyping, lastMessage || false, name);
-  // return (
-  //   <div className="contact">
-  //     <MuiThemeProvider>
-  //       <div>
-  //         <ListItem
-  //           onClick={this.fetchChatData} style={{ color: '#ffffff' }}
-  //           primaryText={name} 
-  //           secondaryText={<span style={{ color: '#ffffff' }}>{lmContent}</span>}
-  //           leftAvatar={
-  //             <Avatar size={45} src={require(`../avatars/${avatar}`)}
-  //               style={{ borderColor: '#000000', borderStyle: 'solid', borderWidth: 2 }} />
-  //           }
-  //         />
-
-  //         <div className="last-message-hour-div">
-  //           <span className="last-message-hour">
-  //             {lastMessageTime}
-  //           </span>
-  //           <MoreButton className="contact-more-icon" />
-  //           {pinned ? <PinIcon className="pin-icon" /> : <span />}
-  //           {getUnraedBadge(isUnraed)}
-  //         </div>
-
-  //         <IconMenu
-  //           className="three-dots-contact"
-  //           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-  //           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-  //           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-  //         >
-  //           <MenuItem primaryText="Archive Chat" />
-  //           <MenuItem primaryText="Mute" />
-  //           <MenuItem primaryText="Delete Chat" onClick={this.deleteContactChat} />
-  //           <MenuItem primaryText={pinned ? "Unpin Chat" : "Pin Chat"}
-  //             onClick={this.pinUnpinChat} />
-  //           <MenuItem primaryText="Mark As Unread" onClick={this.markAsUnraed} />
-  //         </IconMenu>
-  //         <Divider />
-  //       </div>
-  //     </MuiThemeProvider>
-  //   </div>
-  // );
-// }
