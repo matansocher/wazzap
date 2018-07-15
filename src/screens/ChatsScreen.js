@@ -58,7 +58,7 @@ class ChatsScreen extends Component {
         this.props.actionFetchUserData(uid, () => {
           // console.log("2")
           // updateLastSeen(uid, "Online", () => {
-            this.setState({ loading: false });
+          this.setState({ loading: false });
           // })
         });
       });
@@ -161,7 +161,7 @@ class ChatsScreen extends Component {
             navigateToRoute={this.navigateToRoute} />
         </View>
         <ScrollView>
-          { this.state.loading ? <CircularProgress /> : <View /> }
+          {this.state.loading ? <CircularProgress /> : <View />}
           <List>
             {this.renderContacts()}
           </List>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   emptyList: {
-    flex:1, 
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   }

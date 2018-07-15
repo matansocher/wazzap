@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity, Dimensions } from 'react-native';
-import { Avatar, Divider, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import fire from '../firebase';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -27,7 +27,7 @@ class SignUpScreen extends Component {
   }
 
   componentDidMount() {
-    if(_.isEmpty(this.props.avatars)) {
+    if (_.isEmpty(this.props.avatars)) {
       this.setState({ loading: true }, () => {
         this.props.actionFetchAvatars(() => {
           this.setState({ loading: false });
@@ -86,7 +86,7 @@ class SignUpScreen extends Component {
 
   render() {
     const { avatar } = this.state;
-    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
+    const { primaryBackgroundColor, primaryColor, secondaryColor } = this.props.theme;
     return (
       <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
 
@@ -159,16 +159,16 @@ const styles = StyleSheet.create({
   signUpButton: {
     flexDirection: 'row',
     height: 40,
-    width: 140, 
+    width: 140,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10, 
-    marginBottom: 10, 
+    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 10
   },
   textInput: {
-    height: 40, 
-    width: width*0.5, 
+    height: 40,
+    width: width * 0.5,
     fontSize: 24
   }
 });

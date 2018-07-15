@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { ADD_AS_FRIEND, SEARCH_FRIENDS } from '../actions/types';
 
-export default function(state = [], action) {
+export default function (state = [], action) {
   // let newState = state;
   switch (action.type) {
     case SEARCH_FRIENDS:

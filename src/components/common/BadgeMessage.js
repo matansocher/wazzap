@@ -7,9 +7,9 @@ const BadgeMessage = ({ isUnraed, thirdColor, primaryColor }) => {
     return <View />;
   }
   return (
-    <View style={{  }}>
+    <View style={{}}>
       <Badge
-        value={ isUnraed }
+        value={isUnraed}
         containerStyle={{ backgroundColor: thirdColor }}
         textStyle={{ color: primaryColor }} />
     </View>

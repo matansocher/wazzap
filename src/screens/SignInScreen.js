@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
-// import { Ionicons } from '@expo/vector-icons';
 import fire from '../firebase';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
@@ -47,7 +46,7 @@ class SignInScreen extends Component {
   // }
 
   render() {
-    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
+    const { primaryBackgroundColor, primaryColor, secondaryColor } = this.props.theme;
     return (
       <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
         <Image

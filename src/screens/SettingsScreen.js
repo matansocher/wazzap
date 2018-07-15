@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Switch } from 'react-native';
-import { Icon, ListItem, Avatar } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 

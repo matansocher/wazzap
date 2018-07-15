@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Icon } from 'react-native-elements';
-// import { Ionicons } from '@expo/vector-icons';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import firebase from '../firebase';
@@ -45,17 +43,17 @@ class ChatsHeader extends Component {
   render() {
     const { primaryColor, primaryBackgroundColor } = this.props.theme;
     return (
-      <View style={[ styles.container, { backgroundColor: primaryBackgroundColor }]}>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
         <Icon
-          style={ styles.iconStyle }
+          style={styles.iconStyle}
           name='search'
           size={24}
-          color={ primaryColor } />
+          color={primaryColor} />
 
         <TextInput
-          style={ styles.textInputStyle }
+          style={styles.textInputStyle}
           placeholder="Search Contacts"
-          placeholderTextColor={ primaryColor }
+          placeholderTextColor={primaryColor}
           onChangeText={this.handleChangeSearchTerm}
         />
       </View>
@@ -72,17 +70,17 @@ const styles = {
     alignItems: 'center'
   },
   textInputStyle: {
-    flex: 8, 
-    height: 40, 
-    padding: 10, 
-    fontSize: 16, 
-    borderColor: 'grey', 
-    borderWidth: 2, 
+    flex: 8,
+    height: 40,
+    padding: 10,
+    fontSize: 16,
+    borderColor: 'grey',
+    borderWidth: 2,
     borderRadius: 10
   },
   iconStyle: {
-    flex: 1, 
-    padding: 10, 
+    flex: 1,
+    padding: 10,
   }
 }
 

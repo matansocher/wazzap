@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
-import { Icon, Avatar } from 'react-native-elements';
-// import { Button } from 'native-base';
+import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import _ from 'lodash';
@@ -63,7 +62,7 @@ class InfoScreen extends Component {
 
   render() {
     const { email, name, avatar } = this.state;
-    const { primaryBackgroundColor, primaryColor, secondaryColor} = this.props.theme;
+    const { primaryBackgroundColor, primaryColor, secondaryColor } = this.props.theme;
     return (
       <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
         <UserAvatar avatar={avatar} />
@@ -97,7 +96,7 @@ class InfoScreen extends Component {
 
         <TouchableOpacity
           onPress={this.saveClick}
-          style={[styles.saveButton, { backgroundColor: secondaryColor } ]}
+          style={[styles.saveButton, { backgroundColor: secondaryColor }]}
         >
           <Icon name="save" size={30} color={primaryBackgroundColor} />
 
@@ -117,10 +116,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   textInput: {
-    height: 40, 
+    height: 40,
     padding: 15,
-    borderWidth: 0.3, 
-    borderRadius: 10, 
+    borderWidth: 0.3,
+    borderRadius: 10,
     width: '80%',
     marginTop: 10,
     marginBottom: 10,

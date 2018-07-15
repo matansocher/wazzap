@@ -4,7 +4,7 @@ import { darkTheme } from '../CONSTANTS';
 
 const INITIAL_STATE = darkTheme;
 
-export default function(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case CHANGE_THEME:
       return action.payload;

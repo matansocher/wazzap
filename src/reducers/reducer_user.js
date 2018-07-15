@@ -1,7 +1,7 @@
 // import _ from 'lodash';
 import { SIGNUP_USER, LOGIN_USER, LOGOUT_USER, FETCH_USER_DATA, UPDATE_USER_DATA } from '../actions/types';
 
-export default function(state = {}, action) {
+export default function (state = {}, action) {
   // let newState = state;
   switch (action.type) {
     case FETCH_USER_DATA:

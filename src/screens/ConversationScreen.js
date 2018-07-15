@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import fire from '../firebase';
-import _ from 'lodash';
+// import fire from '../firebase';
+// import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import { Icon } from 'react-native-elements';
 import { compareDates, raedMessage } from '../actions/CommonFunctions';
 import ConversationHeader from '../components/ConversationHeader';
 import ConversationFooter from '../components/ConversationFooter';

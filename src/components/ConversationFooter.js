@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { makeMessageID, updateStatusInConversation } from '../actions/CommonFunctions';
 
@@ -90,7 +90,7 @@ class ConversationFooter extends Component {
   // }
 
   render() {
-    const { primaryBackgroundColor, primaryColor} = this.props.theme;
+    const { primaryBackgroundColor, primaryColor } = this.props.theme;
     // , { backgroundColor: primaryBackgroundColor }
     return (
       <View style={[styles.container]}>
@@ -101,7 +101,7 @@ class ConversationFooter extends Component {
           placeholder="Type a message"
           onChangeText={this.handleChange}
         />
-        <Icon name="send" size={30} 
+        <Icon name="send" size={30}
           containerStyle={styles.sendButtonStyle} onPress={this.sendMessage} />
       </View>
     );
@@ -117,11 +117,11 @@ const styles = {
   },
   textInputSytle: {
     flex: 7,
-    height: 50, 
-    padding: 15, 
-    fontSize: 20, 
-    borderColor: 'grey', 
-    borderWidth: 1, 
+    height: 50,
+    padding: 15,
+    fontSize: 20,
+    borderColor: 'grey',
+    borderWidth: 1,
     borderRadius: 10
   },
   iconStyle: {

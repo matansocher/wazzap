@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { View, Picker, Dimensions } from 'react-native';
-import { Divider } from 'react-native-elements';
-// import { connect } from 'react-redux';
-// import * as actions from '../actions/index';
 import _ from 'lodash';
 import { getAvatarsNames } from '../actions/CommonFunctions';
 import DividerContacts from './common/DividerContacts';

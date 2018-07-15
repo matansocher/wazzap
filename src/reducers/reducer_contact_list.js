@@ -3,7 +3,7 @@ import {
   LOGOUT_USER, DELETE_CONTACT_CHAT, FETCH_FRIENDS_LIST, PINUNPIN_CHAT, UNRAED_CHAT
 } from '../actions/types';
 
-export default function(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case FETCH_FRIENDS_LIST:
       return action.payload;
