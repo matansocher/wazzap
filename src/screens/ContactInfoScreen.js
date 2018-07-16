@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
+import UserAvatar from '../components/common/UserAvatar';
 
 class ContactInfoScreen extends Component {
 
@@ -13,14 +14,13 @@ class ContactInfoScreen extends Component {
   }
 
   render() {
+    const { primaryColor, primaryBackgroundColor } = this.props.theme;
+    const { name, avatar, email } = this.props.currentChatUser.info;
     return (
-      <View style={[styles.container, { backgroundColor: this.props.theme.primaryBackgroundColor }]}>
-        <Text>ContactInfoScreen</Text>
-        <Text>ContactInfoScreen</Text>
-        <Text>ContactInfoScreen</Text>
-        <Text>ContactInfoScreen</Text>
-        <Text>ContactInfoScreen</Text>
-        <Text>ContactInfoScreen</Text>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
+        <UserAvatar avatar={avatar} />
+        <Text style={{ color: primaryColor }}>{name}</Text>
+        <Text style={{ color: primaryColor }}>{email}</Text>
       </View>
     );
   }

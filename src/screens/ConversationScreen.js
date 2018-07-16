@@ -52,6 +52,7 @@ class ConversationScreen extends Component {
   }
 
   navigateToRoute = (route) => {
+    console.log(route)
     this.props.navigation.navigate(route);
   }
 
@@ -152,18 +153,19 @@ class ConversationScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   headerContainer: {
-    height: 60,
+    height: 50,
   },
   messageContainer: {
     flex: 1,
-    top: 60,
-    bottom: 40
+    top: 50,
+    bottom: 60
   },
   footerContainer: {
-    height: 60
+    height: 60,
+    bottom: 0
   }
 });
 

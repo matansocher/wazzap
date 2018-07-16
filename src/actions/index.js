@@ -23,11 +23,11 @@ import { lightTheme, darkTheme } from '../CONSTANTS';
 
 import { getAvatarsNames } from './CommonFunctions';
 
-export function actionChangeTheme(isDark) {
+export  function actionChangeTheme(isDark) {
   console.log(isDark)
   return dispatch => {
     const newTheme = isDark ? darkTheme : lightTheme;
-    // AsyncStorage.setItem('isDarkTheme', isDark) // save to async storage
+    // AsyncStorage.setItem('isDarkTheme', isDark || false); // save to async storage
     dispatch({
       type: CHANGE_THEME,
       payload: newTheme

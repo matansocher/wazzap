@@ -47,6 +47,7 @@ class ChatsScreen extends Component {
 
   setTheme = async () => {
     // let theme = await AsyncStorage.getItem('isDarkTheme'); // boolean
+    // console.log("theme: " +theme)
     let theme = true;
     this.props.actionChangeTheme(theme);
   }

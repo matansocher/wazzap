@@ -63,10 +63,13 @@ class FriendsScreen extends Component {
   }
 
   renderList() {
+    const { primaryColor, primaryBackgroundColor } = this.props.theme;
     if (_.isEmpty(this.props.searchFriends)) {
       return (
-        <View>
-          <Text>You have no more friends to add</Text>
+        <View style={[styles.emptyContainer, { backgroundColor: primaryBackgroundColor }]}>
+          <Text style={[styles.emptyText, { color: primaryColor }]}>
+            You have no more friends to add
+          </Text>
         </View>
       );
     }
@@ -76,7 +79,7 @@ class FriendsScreen extends Component {
     return (
       friendsAvailable.map((friend) => {
         return (
-          <FriendsItem key={friend.email}
+          <FriendsItem key={friend.email} theme={this.props.theme}
             friend={friend} addAsFriend={this.addAsFriend} />
         )
       })
@@ -109,6 +112,14 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    fontSize: 24
+  }
 });
 
 function mapStateToProps(state) {

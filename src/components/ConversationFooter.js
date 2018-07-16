@@ -91,9 +91,8 @@ class ConversationFooter extends Component {
 
   render() {
     const { primaryBackgroundColor, primaryColor } = this.props.theme;
-    // , { backgroundColor: primaryBackgroundColor }
     return (
-      <View style={[styles.container]}>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
         <Icon name="mood" size={30} containerStyle={styles.iconStyle} />
         <TextInput
           style={styles.textInputStyle}
@@ -112,7 +111,6 @@ const styles = {
   container: {
     flex: 1,
     flexDirection: 'row',
-    height: 50,
     padding: 10
   },
   textInputSytle: {

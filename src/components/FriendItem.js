@@ -37,6 +37,7 @@ class FriendItem extends Component {
       return <View />
     }
     const { name, avatar } = friend;
+    const { primaryColor, primaryBackgroundColor } = this.props.theme;
     return (
       <View>
         <View onPress={this.handleFriendPress} style={[styles.contactContainer, { backgroundColor: primaryBackgroundColor }]}>

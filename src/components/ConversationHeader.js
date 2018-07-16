@@ -30,9 +30,8 @@ class ConversationHeader extends Component {
     const { name, avatar, lastSeen, isTyping } = this.props.currentChatUser.info;
     const { primaryBackgroundColor, primaryColor } = this.props.theme;
     const lastSeenString = getLastSeenString(isTyping, lastSeen);
-    // , { backgroundColor: primaryBackgroundColor }
     return (
-      <View style={[styles.container]}>
+      <View style={[styles.container, { backgroundColor: primaryBackgroundColor }]}>
 
         <View style={styles.contactDetails} onPress={this.infoClicked}>
           <View style={styles.contactImage}>
@@ -61,7 +60,6 @@ class ConversationHeader extends Component {
 
 const styles = {
   container: {
-    height: 45,
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -82,6 +80,7 @@ const styles = {
   },
   contactActions: {
     flex: 1,
+    padding: 5,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }
