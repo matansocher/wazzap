@@ -1,6 +1,7 @@
 // import React from 'react';
 import fire from '../firebase';
 import _ from 'lodash';
+import moment from 'moment'
 
 export function raedMessage(useruid, contactid) {
   const updates = {};
@@ -31,32 +32,34 @@ export function getLastSeenString(isTyping, lastSeen) {
     return lastSeen;
   }
   // lastSeen === yyyy-mm-dd hh:mm:ss
-  const splitted = lastSeen.split(" ");
-  let dateString = splitted[0];
-  let splittedDate = dateString.split("-");
-  let hourString = splitted[1];
-  let splittedHour = hourString.split(":");
 
-  const dateObject = new Date(splittedDate[0], splittedDate[1] - 1, splittedDate[2]);
-  if (checkIfToday(new Date(), dateObject)) {
-    return `Last seen today at ${splittedHour[0]}:${splittedHour[1]}`;
-  }
-  if (checkIfYesterday(new Date(), dateObject)) {
-    return `Last seen yesterday at ${splittedHour[0]}:${splittedHour[1]}`;
-  }
-  if (checkIfLastWeek(new Date(), dateObject)) {
-    const day = getDayFromDayNumber(dateObject.getDay());
-    return `Last seen ${day} at ${splittedHour[0]}:${splittedHour[1]}`;
-  }
+  return `Last seen ${moment(lastSeen).fromNow()}`;
+  // const splitted = lastSeen.split(" ");
+  // let dateString = splitted[0];
+  // let splittedDate = dateString.split("-");
+  // let hourString = splitted[1];
+  // let splittedHour = hourString.split(":");
 
-  return `Last seen at ${getCorrectDate(dateString)} ${getCorrectHour(hourString)}`;
+  // const dateObject = new Date(splittedDate[0], splittedDate[1] - 1, splittedDate[2]);
+  // if (checkIfToday(new Date(), dateObject)) {
+  //   return `Last seen today at ${splittedHour[0]}:${splittedHour[1]}`;
+  // }
+  // if (checkIfYesterday(new Date(), dateObject)) {
+  //   return `Last seen yesterday at ${splittedHour[0]}:${splittedHour[1]}`;
+  // }
+  // if (checkIfLastWeek(new Date(), dateObject)) {
+  //   const day = getDayFromDayNumber(dateObject.getDay());
+  //   return `Last seen ${day} at ${splittedHour[0]}:${splittedHour[1]}`;
+  // }
+
+  // return `Last seen at ${getCorrectDate(dateString)} ${getCorrectHour(hourString)}`;
 }
 
 
 export function getDateHourString() { // for last seen
   const date = new Date();
   const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  const hourString = `${date.getHours()}:${date.getMinutes()}`;
+  const hourString = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   return `${dateString} ${hourString}`
 }
 

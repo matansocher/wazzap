@@ -15,8 +15,7 @@ export default function (ComposedComponent) {
     //   if (_.isEmpty(this.props.user)) {
     //     this.context.navigation.navigate('Chats')
     //   }
-    //   window.addEventListener("beforeunload", this.onUnload);
-
+    //   this.onUnload();
     // }
 
     // componentWillUpdate(nextProps) {
@@ -26,7 +25,7 @@ export default function (ComposedComponent) {
     // }
 
     // componentWillUnmount() {
-    //   window.removeEventListener("beforeunload", this.onUnload);
+    //   this.onUnload();
     // }
 
     // onUnload = e => {
